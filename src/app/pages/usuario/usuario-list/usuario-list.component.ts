@@ -3,7 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {UsuarioClientService} from "../shared/usuario-client/usuario-client.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {tap} from "rxjs";
 
 @Component({
@@ -19,18 +19,31 @@ export class UsuarioListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  /**
+   *
+   * @param usuarioClientService
+   * @param _snackBar
+   * @param router
+   */
   constructor(
     private usuarioClientService: UsuarioClientService,
     private _snackBar: MatSnackBar,
     private router: Router,
+    private route: ActivatedRoute
   ) {
     this.dataSource = new MatTableDataSource<any>([]);
   }
 
+  /**
+   *
+   */
   ngOnInit(): void {
     this.pesquisar();
   }
 
+  /**
+   * Responsável por pegar ação de mudança de página
+   */
   ngAfterViewInit() {
     this.paginator.page
       .pipe(
@@ -39,8 +52,14 @@ export class UsuarioListComponent implements OnInit {
       .subscribe();
   }
 
-  pesquisar($page = 0, $quantidade = 5) {
-    this.usuarioClientService.filtro($page, $quantidade)
+  /**
+   * Responsável por listar usuários
+   *
+   * @param $page
+   * @param $quantidade
+   */
+  pesquisar(page = 0, quantidade = 5) {
+    this.usuarioClientService.filtro(page, quantidade)
       .subscribe(res => {
           this.dataSource.data = res.data[0];
           this.total = res.data[1];
@@ -51,8 +70,13 @@ export class UsuarioListComponent implements OnInit {
         });
   }
 
-  deletar($id: number) {
-    this.usuarioClientService.deletar($id)
+  /**
+   * Responsável por deletar usuário
+   *
+   * @param id
+   */
+  deletar(id: number) {
+    this.usuarioClientService.deletar(id)
       .subscribe(res => {
           this._snackBar.open(res.message)
           this.pesquisar(this.paginator.pageIndex, this.paginator.pageSize);
@@ -60,5 +84,16 @@ export class UsuarioListComponent implements OnInit {
         (error) => {
           this._snackBar.open(error.error.message);
         });
+  }
+
+  /**
+   * Responsável por ir para tela de editar
+   *
+   * @param element
+   */
+  editar(element: any) {
+    this.router.navigate([`user/${element.id}/edit`], {
+      state: {user: element}
+    });
   }
 }

@@ -8,7 +8,7 @@ export const UsuarioRoutes: Routes = [
     path: 'new',
     component: UsuarioFormComponent,
     data: {
-      acao: 'new',
+      funcao: 'new',
     },
     canActivate: [
 
@@ -19,15 +19,14 @@ export const UsuarioRoutes: Routes = [
     path: ':id/edit',
     component: UsuarioFormComponent,
     data: {
-      acao: 'edit',
+      funcao: 'edit',
     },
-    resolve: {}
   },
   {
     path: ':id/details',
     component: UsuarioFormComponent,
     data: {
-      acao: 'details',
+      funcao: 'details',
     },
     resolve: {},
     canActivate: [

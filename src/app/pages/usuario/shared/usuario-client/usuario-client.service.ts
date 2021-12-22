@@ -42,4 +42,14 @@ export class UsuarioClientService {
       params: params,
     });
   }
+
+  public edit(data: any): Observable<any> {
+    return this.http.put(`${environment.url_api + this.path}`, data, {
+      headers: this.headers,
+    });
+  }
+
+  public save(data: any): Observable<any> {
+    return this.http.post(`${environment.url_api + this.path}`, data);
+  }
 }

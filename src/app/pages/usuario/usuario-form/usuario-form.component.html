@@ -1,1 +1,49 @@
-<p>usuario-form works!</p>
+<div fxLayout="column" fxFlexAlign="center" fxLayoutGap="2%">
+  <mat-card-title *ngIf="isCadastrar()" class="title">Cadastro Usuário</mat-card-title>
+  <mat-card-title *ngIf="isVizualizar()" class="title">Visualizar Usuário</mat-card-title>
+  <mat-card-title *ngIf="isEditar()" class="title">Editar Usuário</mat-card-title>
+
+  <form fxLayout="column" fxFlexAlign="center center" fxLayoutGap="1%" [formGroup]="form" (ngSubmit)="salvar()">
+    <mat-form-field>
+      <input title="Cpf" matInput formControlName="cpf" maxlength="14" placeholder="Cpf" mask="000.000.000-00"
+             [showMaskTyped]="false">
+      <mat-error *ngIf="form.get('cpf').hasError('required')">Cpf é obrigátorio</mat-error>
+      <mat-error *ngIf="form.get('cpf').hasError('mask')">Cpf inválido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input title="Nome" matInput formControlName="nome" maxlength="60" placeholder="Nome">
+      <mat-error *ngIf="form.get('nome').hasError('required')">Nome é obrigátorio</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="date" title="Data Nascimento" matInput formControlName="data_nascimento" minlength="6"
+             maxlength="60"
+             placeholder="Data Nascimento">
+      <mat-error *ngIf="form.get('data_nascimento').hasError('required')">Data Nascimento é obrigátorio</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="text" title="Rg" matInput formControlName="rg"
+             maxlength="50"
+             placeholder="Rg">
+      <mat-error *ngIf="form.get('rg').hasError('required')">Rg é obrigátorio</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="password" title="Senha" matInput formControlName="password" maxlength="60"
+             placeholder="Senha">
+      <mat-error *ngIf="form.get('password').hasError('required')">Senha é obrigátorio</mat-error>
+    </mat-form-field>
+
+    <div fxLayoutGap="2%">
+      <button fxFlex="100%" mat-raised-button (click)="voltar()" color="accent" type="submit">
+        <span>Voltar</span>
+      </button>
+      <button *ngIf="isEditar() || isCadastrar()" fxFlex="100%" mat-raised-button [disabled]="form.invalid" color="primary" type="submit">
+        <span *ngIf="isEditar()">Editar</span>
+        <span *ngIf="isCadastrar()">Cadastrar</span>
+      </button>
+    </div>
+  </form>
+</div>

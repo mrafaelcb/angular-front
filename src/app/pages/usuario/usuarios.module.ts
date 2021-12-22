@@ -13,6 +13,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {NgxMaskModule} from "ngx-mask";
 import {MomentModule} from "ngx-moment";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const MATERIAL_MODULES = [
   MatCardModule,
@@ -21,7 +24,9 @@ const MATERIAL_MODULES = [
   MatSnackBarModule,
   MatTableModule,
   MatCardModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatFormFieldModule,
+  MatInputModule,
 ];
 
 @NgModule({
@@ -36,6 +41,7 @@ const MATERIAL_MODULES = [
     FlexModule,
     NgxMaskModule,
     MomentModule,
+    ReactiveFormsModule,
   ]
 })
 export class UsuarioModule {
