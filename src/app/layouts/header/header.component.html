@@ -1,1 +1,9 @@
-<p>header works!</p>
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="center center" fxLayout.xs="column">
+  <button mat-button (click)="home()"><h3>Angular Frontend</h3></button>
+  <span fxFlex></span>
+  <span></span>
+  <button mat-button (click)="login()">
+    Entrar
+    <mat-icon>login</mat-icon>
+  </button>
+</mat-toolbar>
