@@ -2,8 +2,18 @@
   <button mat-button (click)="home()"><h3>Angular Frontend</h3></button>
   <span fxFlex></span>
   <span></span>
-  <button mat-button (click)="login()">
+  <button *ngIf="isAutentificado()" mat-button (click)="user()">
+    Usuário
+    <mat-icon>
+      account_circle
+    </mat-icon>
+  </button>
+  <button *ngIf="!isLogin() && !isAutentificado()" mat-button (click)="login()">
     Entrar
     <mat-icon>login</mat-icon>
+  </button>
+  <button *ngIf="isAutentificado()" mat-button (click)="sair()">
+    Sair
+    <mat-icon>exit_to_app</mat-icon>
   </button>
 </mat-toolbar>

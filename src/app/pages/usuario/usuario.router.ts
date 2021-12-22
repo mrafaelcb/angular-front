@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
 import {UsuarioFormComponent} from './usuario-form/usuario-form.component';
 import {UsuarioListComponent} from './usuario-list/usuario-list.component';
+import {AuthGuard} from "../../shared/security/auth.guard";
 
 export const UsuarioRoutes: Routes = [
   {
@@ -9,6 +10,9 @@ export const UsuarioRoutes: Routes = [
     data: {
       acao: 'new',
     },
+    canActivate: [
+
+    ],
     resolve: {}
   },
   {
@@ -25,13 +29,19 @@ export const UsuarioRoutes: Routes = [
     data: {
       acao: 'details',
     },
-    resolve: {}
+    resolve: {},
+    canActivate: [
+      AuthGuard
+    ],
   },
   {
     path: 'list',
     component: UsuarioListComponent,
     data: {},
-    resolve: {}
+    resolve: {},
+    canActivate: [
+      AuthGuard
+    ],
   },
   {
     path: '',

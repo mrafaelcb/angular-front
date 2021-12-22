@@ -8,4 +8,4 @@ Frontend do [PHP API](https://github.com/mrafaelcb/php-api)
 
 ## Iniciar Servidor
 
-    ng server
+    npm start

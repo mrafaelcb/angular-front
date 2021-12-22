@@ -1,4 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AuthClientService} from "../shared/auth-client.service";
+import {environment} from "../../../../environments/environment";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Util} from "../../../shared/utils/util";
 
 @Component({
   selector: 'app-login',
@@ -7,10 +13,44 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() {
+  public form: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private authClientService: AuthClientService,
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {
+    if (Util.isAutentificado()) {
+      this.router.navigateByUrl('user/list');
+    }
   }
 
   ngOnInit(): void {
+    this.constuirForm();
+  }
+
+  /**
+   * Responsável por contruir o form
+   */
+  constuirForm() {
+    this.form = this.formBuilder.group({
+      cpf: [null, [Validators.required]],
+      password: [null, [Validators.required, Validators.min(6)]]
+    });
+  }
+
+  /**
+   * Reponsável por efetuar login
+   */
+  entrar() {
+    this.authClientService.login(this.form.value).subscribe((res) => {
+        localStorage.setItem(environment.name_storage, JSON.stringify(res.data.token));
+        this.router.navigateByUrl('/user');
+      },
+      (error) => {
+        this._snackBar.open(error.error.message);
+      });
   }
 
 }

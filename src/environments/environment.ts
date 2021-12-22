@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url_api: 'http://localhost:80'
+  url_api: 'http://localhost:4200/api',
+  name_storage: 'angular-front',
 };
 
 /*
