@@ -11,7 +11,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {NgxMaskModule} from "ngx-mask";
-import {AuthClientService} from "./shared/auth-client.service";
+import {AuthClientService} from "./shared/auth-client/auth-client.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 const MATERIAL_MODULES = [

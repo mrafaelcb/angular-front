@@ -1,4 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {UsuarioClientService} from "../shared/usuario-client/usuario-client.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-usuario-list',
@@ -7,10 +13,52 @@ import {Component, OnInit} from '@angular/core';
 })
 export class UsuarioListComponent implements OnInit {
 
-  constructor() {
+  displayedColumns: string[] = ['nome', 'data_nascimento', 'cpf', 'rg', 'data_criacao', 'acoes'];
+  public dataSource: MatTableDataSource<any>;
+  public total: number;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(
+    private usuarioClientService: UsuarioClientService,
+    private _snackBar: MatSnackBar,
+    private router: Router,
+  ) {
+    this.dataSource = new MatTableDataSource<any>([]);
   }
 
   ngOnInit(): void {
+    this.pesquisar();
   }
 
+  ngAfterViewInit() {
+    this.paginator.page
+      .pipe(
+        tap(() => this.pesquisar(this.paginator.pageIndex, this.paginator.pageSize))
+      )
+      .subscribe();
+  }
+
+  pesquisar($page = 0, $quantidade = 5) {
+    this.usuarioClientService.filtro($page, $quantidade)
+      .subscribe(res => {
+          this.dataSource.data = res.data[0];
+          this.total = res.data[1];
+        },
+        (error) => {
+          this._snackBar.open(error.error.message);
+          this.dataSource.data = [];
+        });
+  }
+
+  deletar($id: number) {
+    this.usuarioClientService.deletar($id)
+      .subscribe(res => {
+          this._snackBar.open(res.message)
+          this.pesquisar(this.paginator.pageIndex, this.paginator.pageSize);
+        },
+        (error) => {
+          this._snackBar.open(error.error.message);
+        });
+  }
 }

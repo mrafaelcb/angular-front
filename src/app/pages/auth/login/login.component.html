@@ -1,33 +1,28 @@
-<div class="login" fxLayout="column" fxFlexAlign="center" fxLayoutGap="2%">
+<div fxLayout="column" fxFlexAlign="center" fxLayoutGap="2%">
+  <mat-card-title class="title">Login</mat-card-title>
 
-  <mat-card>
-    <mat-card-title class="title">Login</mat-card-title>
+  <form fxLayout="column" fxFlexAlign="center center" fxLayoutGap="1%" [formGroup]="form" (ngSubmit)="entrar()">
+    <mat-form-field>
+      <input title="Cpf" matInput formControlName="cpf" maxlength="14" placeholder="Cpf" mask="000.000.000-00"
+             [showMaskTyped]="false">
+      <mat-error *ngIf="form.get('cpf').hasError('required')">Cpf é obrigátorio</mat-error>
+      <mat-error *ngIf="form.get('cpf').hasError('mask')">Cpf inválido</mat-error>
+    </mat-form-field>
 
-    <mat-card-content >
-      <form fxLayout="column" fxFlexAlign="center center" fxLayoutGap="1%" [formGroup]="form" (ngSubmit)="entrar()">
-        <mat-form-field>
-          <input title="Cpf" matInput formControlName="cpf" maxlength="14" placeholder="Cpf" mask="000.000.000-00"
-                 [showMaskTyped]="false">
-          <mat-error *ngIf="form.get('cpf').hasError('required')">Cpf é obrigátorio</mat-error>
-          <mat-error *ngIf="form.get('cpf').hasError('mask')">Cpf inválido</mat-error>
-        </mat-form-field>
+    <mat-form-field>
+      <input type="password" title="Cpf" matInput formControlName="password" minlength="6" maxlength="60"
+             placeholder="Senha">
+      <mat-error *ngIf="form.get('password').hasError('required')">Senha é obrigátorio</mat-error>
+    </mat-form-field>
 
-        <mat-form-field>
-          <input type="password" title="Cpf" matInput formControlName="password" minlength="6" maxlength="60"
-                 placeholder="Senha">
-          <mat-error *ngIf="form.get('password').hasError('required')">Senha é obrigátorio</mat-error>
-        </mat-form-field>
+    <div fxFlex="5%" fxFlexAlign="end">
+      <a mat-button color="primary">Cadastro</a>
+    </div>
 
-        <div fxFlex="5%" fxFlexAlign="end">
-          <a mat-button color="primary">Cadastro</a>
-        </div>
-
-        <div fxFlex="50%">
-          <button fxFlex="100%" mat-raised-button [disabled]="form.invalid" color="primary" type="submit">
-            <span>Entrar</span>
-          </button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+    <div fxFlex="50%">
+      <button fxFlex="100%" mat-raised-button [disabled]="form.invalid" color="primary" type="submit">
+        <span>Entrar</span>
+      </button>
+    </div>
+  </form>
 </div>

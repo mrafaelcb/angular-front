@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthClientService} from "../shared/auth-client.service";
-import {environment} from "../../../../environments/environment";
+import {AuthClientService} from "../shared/auth-client/auth-client.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Util} from "../../../shared/utils/util";
@@ -45,7 +44,7 @@ export class LoginComponent implements OnInit {
    */
   entrar() {
     this.authClientService.login(this.form.value).subscribe((res) => {
-        localStorage.setItem(environment.name_storage, JSON.stringify(res.data.token));
+        Util.salvarToken(res.data.token);
         this.router.navigateByUrl('/user');
       },
       (error) => {
