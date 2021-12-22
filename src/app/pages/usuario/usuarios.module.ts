@@ -16,6 +16,8 @@ import {MomentModule} from "ngx-moment";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatSelectModule} from "@angular/material/select";
 
 const MATERIAL_MODULES = [
   MatCardModule,
@@ -27,22 +29,24 @@ const MATERIAL_MODULES = [
   MatPaginatorModule,
   MatFormFieldModule,
   MatInputModule,
+  MatDividerModule,
+  MatSelectModule,
 ];
 
 @NgModule({
   declarations: [
     UsuarioListComponent,
-    UsuarioFormComponent
+    UsuarioFormComponent,
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(UsuarioRoutes),
     MATERIAL_MODULES,
     FlexModule,
     NgxMaskModule,
     MomentModule,
     ReactiveFormsModule,
-  ]
+    RouterModule.forChild(UsuarioRoutes),
+  ],
 })
 export class UsuarioModule {
 }

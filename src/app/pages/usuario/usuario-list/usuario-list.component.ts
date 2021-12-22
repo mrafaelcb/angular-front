@@ -3,7 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {UsuarioClientService} from "../shared/usuario-client/usuario-client.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {tap} from "rxjs";
 
 @Component({
@@ -14,6 +14,7 @@ import {tap} from "rxjs";
 export class UsuarioListComponent implements OnInit {
 
   displayedColumns: string[] = ['nome', 'data_nascimento', 'cpf', 'rg', 'data_criacao', 'acoes'];
+
   public dataSource: MatTableDataSource<any>;
   public total: number;
 
@@ -29,7 +30,6 @@ export class UsuarioListComponent implements OnInit {
     private usuarioClientService: UsuarioClientService,
     private _snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute
   ) {
     this.dataSource = new MatTableDataSource<any>([]);
   }
@@ -93,6 +93,17 @@ export class UsuarioListComponent implements OnInit {
    */
   editar(element: any) {
     this.router.navigate([`user/${element.id}/edit`], {
+      state: {user: element}
+    });
+  }
+
+  /**
+   * Responsável por ir para tela de visualizar
+   *
+   * @param element
+   */
+  visualizar(element: any) {
+    this.router.navigate([`user/${element.id}/details`], {
       state: {user: element}
     });
   }

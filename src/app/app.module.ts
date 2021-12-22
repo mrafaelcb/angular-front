@@ -4,14 +4,16 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LayoutsModule} from './layouts/layouts.module';
-import { NotFoundComponent } from './shared/component/not-found/not-found.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NotFoundComponent} from './shared/component/not-found/not-found.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexModule} from "@angular/flex-layout";
 import {MatCardModule} from "@angular/material/card";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FormsModule} from "@angular/forms";
 import {NgxMaskModule} from "ngx-mask";
 import {HttpClientModule} from "@angular/common/http";
+import {DomainService} from "./shared/services/domain.service";
+import {CidadesResolve} from "./shared/services/cidades.resolve";
 
 const MATERIAL_MODULES = [
   MatCardModule,
@@ -21,7 +23,7 @@ const MATERIAL_MODULES = [
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,7 @@ const MATERIAL_MODULES = [
     HttpClientModule,
     NgxMaskModule.forRoot(),
   ],
-  providers: [],
+  providers: [DomainService, CidadesResolve],
   bootstrap: [AppComponent]
 })
 export class AppModule {

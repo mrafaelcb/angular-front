@@ -33,6 +33,11 @@ export class UsuarioClientService {
     });
   }
 
+  /**
+   * Responsável por deletar usuário no backend
+   *
+   * @param $id
+   */
   public deletar($id: number): Observable<any> {
     let params = new HttpParams()
       .set("id", $id);
@@ -43,12 +48,22 @@ export class UsuarioClientService {
     });
   }
 
+  /**
+   * Responsável por editar usuário no backend
+   *
+   * @param data
+   */
   public edit(data: any): Observable<any> {
     return this.http.put(`${environment.url_api + this.path}`, data, {
       headers: this.headers,
     });
   }
 
+  /**
+   * Responsável por salvar usuário no backend
+   *
+   * @param data
+   */
   public save(data: any): Observable<any> {
     return this.http.post(`${environment.url_api + this.path}`, data);
   }

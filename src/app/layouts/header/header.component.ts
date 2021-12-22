@@ -30,14 +30,14 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * verifica se está na rota de login
+   * Responsável por verifica se está na rota de login
    */
   isLogin() {
     return this.router.url == '/auth/login';
   }
 
   /**
-   * Verifica existencia de token
+   * Responsável por verificar existencia de token
    */
   isAutentificado() {
     return Util.isAutentificado();
@@ -51,6 +51,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('auth/login');
   }
 
+  /**
+   * Responsável por ir para rota de user
+   */
   user() {
     this.router.navigateByUrl('user/list');
   }

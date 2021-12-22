@@ -1,9 +1,9 @@
-<div fxLayout="column" fxFlexAlign="center" fxLayoutGap="2%">
+<div fxLayout="column" fxFlexAlign="center" fxLayoutGap="1%">
   <mat-card-title *ngIf="isCadastrar()" class="title">Cadastro Usuário</mat-card-title>
   <mat-card-title *ngIf="isVizualizar()" class="title">Visualizar Usuário</mat-card-title>
   <mat-card-title *ngIf="isEditar()" class="title">Editar Usuário</mat-card-title>
 
-  <form fxLayout="column" fxFlexAlign="center center" fxLayoutGap="1%" [formGroup]="form" (ngSubmit)="salvar()">
+  <form fxLayout="column" fxFlexAlign="center center" fxLayoutGap="1%" [formGroup]="form">
     <mat-form-field>
       <input title="Cpf" matInput formControlName="cpf" maxlength="14" placeholder="Cpf" mask="000.000.000-00"
              [showMaskTyped]="false">
@@ -12,7 +12,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input title="Nome" matInput formControlName="nome" maxlength="60" placeholder="Nome">
+      <input title="Nome" matInput formControlName="nome" minlength="10" maxlength="60" placeholder="Nome">
       <mat-error *ngIf="form.get('nome').hasError('required')">Nome é obrigátorio</mat-error>
     </mat-form-field>
 
@@ -36,11 +36,102 @@
       <mat-error *ngIf="form.get('password').hasError('required')">Senha é obrigátorio</mat-error>
     </mat-form-field>
 
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span> Telefones </span>
+      <button *ngIf="!isVizualizar()" mat-mini-fab color="warn" (click)="addFormTelefone()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div formArrayName="telefones">
+      <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="1%"
+           *ngFor="let telefone of telefones.controls; let i = index; last as isLast;"
+           [formGroup]="telefone">
+
+        <span>Telefone {{i + 1}}</span>
+
+        <mat-form-field>
+          <input title="DDD" matInput formControlName="ddd" maxlength="2" placeholder="DDD" mask="00"
+                 [showMaskTyped]="false">
+          <mat-error *ngIf="telefone.get('ddd').hasError('required')">DDD é obrigátorio</mat-error>
+          <mat-error *ngIf="telefone.get('ddd').hasError('mask')">DDD inválido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input title="Número" matInput formControlName="numero" placeholder="Número" mask="0 0000-0000"
+                 [showMaskTyped]="false">
+          <mat-error *ngIf="telefone.get('numero').hasError('required')">Número é obrigátorio</mat-error>
+          <mat-error *ngIf="telefone.get('numero').hasError('mask')">Número inválido</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span> Endereços </span>
+      <button *ngIf="!isVizualizar()" mat-mini-fab color="warn" (click)="addFormEndereco()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div formArrayName="enderecos">
+      <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="1%"
+           *ngFor="let endereco of enderecos.controls; let i = index; last as isLast;"
+           [formGroup]="endereco">
+
+        <span>Endereço {{i + 1}}</span>
+
+        <div fxLayout="column" fxLayoutGap="1%">
+          <div fxLayout="row" fxLayoutGap="1%">
+            <mat-form-field>
+              <input title="Logradouro" matInput formControlName="logradouro" placeholder="Logradouro">
+              <mat-error *ngIf="endereco.get('logradouro').hasError('required')">Logradouro é obrigátorio</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input title="Complemento" matInput formControlName="complemento" placeholder="Complemento">
+              <mat-error *ngIf="endereco.get('complemento').hasError('required')">Complemento é obrigátorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutGap="1%">
+            <mat-form-field>
+              <input title="Número" matInput formControlName="numero" placeholder="Número">
+              <mat-error *ngIf="endereco.get('numero').hasError('required')">Número é obrigátorio</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input title="Cep" matInput formControlName="cep" placeholder="Cep" mask="00000-000"
+                     [showMaskTyped]="false">
+              <mat-error *ngIf="endereco.get('cep').hasError('required')">Cep é obrigátorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutGap="1%">
+            <mat-form-field>
+              <mat-label>Cidade</mat-label>
+              <mat-select formControlName="fk_cidade">
+                <mat-option *ngFor="let cidade of listaCidades" [value]="cidade.id">
+                  {{cidade.nome}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
     <div fxLayoutGap="2%">
       <button fxFlex="100%" mat-raised-button (click)="voltar()" color="accent" type="submit">
         <span>Voltar</span>
       </button>
-      <button *ngIf="isEditar() || isCadastrar()" fxFlex="100%" mat-raised-button [disabled]="form.invalid" color="primary" type="submit">
+
+      <button *ngIf="isEditar() || isCadastrar()" fxFlex="100%" mat-raised-button
+              (click)="salvar()"
+              color="primary" type="submit">
         <span *ngIf="isEditar()">Editar</span>
         <span *ngIf="isCadastrar()">Cadastrar</span>
       </button>

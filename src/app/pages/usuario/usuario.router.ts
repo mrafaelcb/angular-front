@@ -2,6 +2,7 @@ import {Routes} from '@angular/router';
 import {UsuarioFormComponent} from './usuario-form/usuario-form.component';
 import {UsuarioListComponent} from './usuario-list/usuario-list.component';
 import {AuthGuard} from "../../shared/security/auth.guard";
+import {CidadesResolve} from "../../shared/services/cidades.resolve";
 
 export const UsuarioRoutes: Routes = [
   {
@@ -10,16 +11,19 @@ export const UsuarioRoutes: Routes = [
     data: {
       funcao: 'new',
     },
-    canActivate: [
-
-    ],
-    resolve: {}
+    canActivate: [],
+    resolve: {
+      cidades: CidadesResolve
+    },
   },
   {
     path: ':id/edit',
     component: UsuarioFormComponent,
     data: {
       funcao: 'edit',
+    },
+    resolve: {
+      cidades: CidadesResolve
     },
   },
   {
@@ -28,7 +32,9 @@ export const UsuarioRoutes: Routes = [
     data: {
       funcao: 'details',
     },
-    resolve: {},
+    resolve: {
+      cidades: CidadesResolve
+    },
     canActivate: [
       AuthGuard
     ],

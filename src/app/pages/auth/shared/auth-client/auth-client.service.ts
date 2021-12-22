@@ -20,7 +20,6 @@ export class AuthClientService {
    * @param login
    */
   public login(login: any): Observable<any> {
-
     return this.http.post(`${environment.url_api}/login`, login);
   }
 }
